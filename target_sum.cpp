@@ -39,6 +39,23 @@ using namespace std;
 //     int s;
 // };
 
+/*---------Use the dynamic program---------*/
+int findTargetSumWays(vector<int>& nums, int s) {
+   int sum = accumulate(nums.begin(), nums.end(), 0);
+   return sum < s || (s + sum) & 1 ? 0 : subsetSum(nums, (s + sum) >> 1);
+}
+
+int subsetSum(vector<int>& nums, int s) {
+  int dp[s + 1] = { 0 };
+  dp[0] = 1;
+  for (int n : nums)
+     for (int i = s; i >= n; i--){
+         dp[i] += dp[i - n];
+         // cout<<"i is " <<i <<" "<<dp[i]<<endl;
+     }
+  return dp[s];
+}
+
 int main(){
   vector<int> nums{33,36,38,40,25,49,1,8,50,13,41,50,29,27,18,25,37,8,0,48};
   int s = 0;
