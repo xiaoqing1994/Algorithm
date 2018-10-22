@@ -1,1 +1,3 @@
-"The algorithm"
+```c++
+int s = 
+```
