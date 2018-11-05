@@ -1,23 +1,25 @@
-#C++ NOTE
+# C++ NOTE
 
-##CONTENT
+## CONTENT
 - [Override and Overload](#override-and-overload)
 - [Class member](#class-member)
 - [Pointer](#pointer)
+- [Friend Function and Friend class](#friend-function-and-friend-class)
+- [Pass by reference and value](#pass-by-reference-and-value)
 
-##Override and Overload
+## Override and Overload
 Overloading function name means providing more than one declaration and definition using the same function name.
 
 Overriding means
 
-##Class member
-###Accessor and Mutator function
+## Class member
+### Accessor and Mutator function
 Corresponding to get and set function.
-###Utility Function(helper function)
+### Utility Function(helper function)
 The private function in the class which is used only in the class.
 
-##Pointer
-###New and delete
+## Pointer
+### New and delete
 In C, we allocate and collect memory by using:
 ```c
 int *p;
@@ -39,7 +41,7 @@ delete []p2; //call the destruction of every elements.
 t *p3;
 p3 = new t(val); //new a object and initialize it
 ```
-###This
+### This
 Every object in C++ has access to its own address through **this** pointers. We always use it when we want to specify which parameters we refer to.
 ```c++
 //Example 1
@@ -56,8 +58,77 @@ Data& Data::set(int year){
   return * this;
 }
 ```
-##Friend Function and Friend Class
+## Friend Function and Friend Class
 Friend functions are not members of a class, but can access private member variables of the class. It is declared using the keyword **friend** in the class definition.
 ```c++
+//Example one friend function
+class dayOfYear{
+public:
+  friend bool equal(dayOfYear date1, dayOfYear data2);
+};
 
+bool equal(dayOfYear date1, dayOfYear date2){};
+
+//Example two friend Class
+class y;
+class x{
+public:
+  friend y;
+private:
+  int k;
+  void m_xfunc();
+};
+
+void y::m_yfunc(x& obj){
+//y can access to the private members in x class
+//since its a friend class of x
+  obj.k = 100;
+}
+
+//Example three friend function from other Class
+class y{
+public:
+  void yfunc();
+};
+
+class x{
+public:
+  friend void y::func();
+private:
+  int k;
+  void xfunc();
+};
+
+void y::yfunc(){
+  x obj;
+  obj.k = 100;
+}//;
+```
+**When to use a friend function:**
+Use a friend function if the task performed by the function involves more than one object.
+
+## Pass by reference and value
+Pass by reference is more efficient as there is only one copy of the argument. Pass by value results in two copies of the arguments.
+
+We can use const declaration to ensure that the called function will not modify the argument.
+### const
+```c++
+//1. set the parameters as const and it will not modify by called function
+Money add(const Money& amount1){};
+
+//2. set the function as const so that the function will not change the value of any member variables
+int getMonth() const;
+int getMonth() const{};
+//const keyword should in function declaration and definition.
+
+//3. const data member must be initialized using a member initializer
+class Increment{
+public:
+  Increment(int c,int in);
+private:
+  int count;
+  const int increment;
+};
+//member initializer
+Increment::Increment(int c, int i):count(c),increment(in){};
 ```
