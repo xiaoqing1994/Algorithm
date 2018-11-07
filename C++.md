@@ -132,3 +132,31 @@ private:
 //member initializer
 Increment::Increment(int c, int i):count(c),increment(in){};
 ```
+
+## Operators Overloading
+![overload](operator.png)
+![nOverload](nOverload.png)
+**Overload a operator in a Class**
+```c++
+ReturnType ClassName::operator symbol(arguments){};
+```
+### Unary Operators
+Overload ++ and --
+Prefix version overloaded the same as any other prefix unary operators. is
+```c++
+//prefix
+d1.operator++(); //for ++d1;
+//postfix
+d1.operator++(int);
+//prototype:
+Date::operator++(int);
+```
+### Binary operators
+重载二元运算符时，成员运算符函数只需显式传递一个参数（即二元运算符的右操作数），而左操作数则是该类对象本身，通过this指针隐式传递:
+```c++
+complex c1(1,2),c2(2); //instantiate a complex number.
+complex c3;
+c3 = c1 + c2; //c1.operator + (c2)
+```
+可以在类中实现overload也可以使用友元函数，但是在类中实现意味着只需要传递一个参数即可，而如果是使用友元函数则需要两个参数。在实际案例中，使用友元函数较好。
+注意-运算既是Unary Operator(x = -y //negate a value) 也是Binary Operator(x = y - z;).
